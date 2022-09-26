@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "291877056924",
+    "project_id": "choton-f6ea6",
+    "storage_bucket": "choton-f6ea6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:291877056924:android:1c577444b1d2320dfa1859",
+        "android_client_info": {
+          "package_name": "com.example.udhari"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "291877056924-ei8ou2bc7fni7alj64m0dp1lq10qoir8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.udhari",
+            "certificate_hash": "ae27895bc68f4bf7832282a71bd84ec24c438b21"
+          }
+        },
+        {
+          "client_id": "291877056924-8sd4eml06la5t8d9t7iuoevmt7bvkj6u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBt-w-whf5ADZacGWV3suItgSROGsrTF0I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "291877056924-8sd4eml06la5t8d9t7iuoevmt7bvkj6u.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "291877056924-0191dio0j6n8nctgp5b7okn7ikm65gbh.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.udhari"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
