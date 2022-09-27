@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/route_manager.dart';
+import 'package:udhari/models/Auth.dart';
+import 'package:udhari/screens/link_create.dart';
+import 'package:udhari/widgets/stas_container_widget.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -6,41 +10,48 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              // Profile Picture
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const <Widget>[
-                  SizedBox(height: 20),
-                  CircleAvatar(
-                    radius: 50,
-                    backgroundImage: NetworkImage(
-                        'https://avatars.githubusercontent.com/u/16821682?v=4'),
-                  ),
-                ],
-              ),
+    final AuthUser user =
+        ModalRoute.of(context)!.settings.arguments as AuthUser;
+    final List<String> links = [
+      'https://flutter.dev',
+      'https://flutter.dev',
+      'https://flutter.dev',
+      'https://flutter.dev',
+      'https://flutter.dev',
+      'https://flutter.dev',
+      'https://flutter.dev',
+      'https://flutter.dev',
+      'https://flutter.dev',
+      'https://flutter.dev',
+    ];
 
-              const SizedBox(height: 20),
-              // Name
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const <Widget>[
-                  Text(
-                    'Sourav Chakraborty',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-              //
-            ],
-          ),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Dashboard'),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => Get.toNamed(LinkCreate.routeName),
+        child: const Icon(Icons.add),
+      ),
+      body: SafeArea(
+        child: Column(
+          children: <Widget>[
+            // Stats
+            const StatsContainerWidget(),
+            Expanded(
+              child: ListView.builder(
+                  padding: const EdgeInsets.all(14.0),
+                  itemCount: links.length,
+                  itemBuilder: (context, index) {
+                    return Card(
+                      child: ListTile(
+                        title: Text(links[index]),
+                        subtitle: const Text('clicks: 0'),
+                      ),
+                    );
+                  }),
+            )
+          ],
         ),
       ),
     );
