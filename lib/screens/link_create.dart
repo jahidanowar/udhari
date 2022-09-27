@@ -12,6 +12,7 @@ class LinkCreate extends StatefulWidget {
 
 class _LinkCreateState extends State<LinkCreate> {
   final LinkController controller = Get.find();
+  late String nanoKey;
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +45,22 @@ class _LinkCreateState extends State<LinkCreate> {
                       // Check if the link is valid
                       if (!Uri.parse(value).isAbsolute) {
                         return 'Please enter a valid link';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  TextFormField(
+                    controller: controller.keyFormController,
+                    decoration: const InputDecoration(
+                      labelText: 'enter a key',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                      ),
+                    ),
+                    validator: (String? value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter some text';
                       }
                       return null;
                     },

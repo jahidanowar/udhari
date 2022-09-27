@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:udhari/screens/home_screen.dart';
@@ -20,6 +21,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+
     return GetMaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -67,7 +70,9 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      initialRoute: HomeScreen.routeName,
+      initialRoute: auth.currentUser != null
+          ? HomeScreen.routeName
+          : LoginScreen.routeName,
       getPages: [
         GetPage(
           name: LoginScreen.routeName,

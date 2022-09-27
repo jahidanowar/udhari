@@ -1,11 +1,9 @@
 class Link {
-  final String id;
   final String source;
   final String destination;
-  final String clicks;
+  final int clicks;
 
   Link({
-    required this.id,
     required this.source,
     required this.destination,
     required this.clicks,
@@ -13,19 +11,17 @@ class Link {
 
   factory Link.fromJson(Map<String, dynamic> json) {
     return Link(
-      id: json['id'],
       source: json['source'],
       destination: json['destination'],
-      clicks: json['clicks'],
+      clicks: json['total_clicks'],
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
       'source': source,
       'destination': destination,
-      'clicks': clicks,
+      'total_clicks': 0,
     };
   }
 }

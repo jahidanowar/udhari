@@ -4,6 +4,7 @@ import 'package:udhari/controllers/link_controller.dart';
 import 'package:udhari/models/Link.dart';
 import 'package:udhari/screens/link_create.dart';
 import 'package:udhari/widgets/stas_container_widget.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -18,33 +19,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    _fetchLinks();
-
+    controller.fetchLinks();
     super.initState();
-  }
-
-  _fetchLinks() async {
-    final List<String> links = [
-      'https://flutter.dev',
-      'https://flutter.dev',
-      'https://flutter.dev',
-      'https://flutter.dev',
-      'https://flutter.dev',
-      'https://flutter.dev',
-      'https://flutter.dev',
-      'https://flutter.dev',
-      'https://flutter.dev',
-      'https://flutter.dev',
-    ];
-
-    for (final String link in links) {
-      controller.addLink(Link(
-        id: DateTime.now().millisecondsSinceEpoch.toString(),
-        source: link,
-        destination: 'Flutter',
-        clicks: '3',
-      ));
-    }
   }
 
   @override
@@ -73,10 +49,51 @@ class _HomeScreenState extends State<HomeScreen> {
                   itemCount: controller.allLinks.length,
                   itemBuilder: (BuildContext context, int index) {
                     final Link link = controller.allLinks[index];
-                    return ListTile(
-                      title: Text(link.source),
-                      subtitle: Text(link.destination),
-                      trailing: Text(link.clicks),
+                    return Dismissible(
+                      key: Key(index.toString()),
+                      background: const Card(
+                        elevation: 0,
+                        color: Colors.green,
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Padding(
+                            padding: EdgeInsets.only(left: 20.0),
+                            child: Icon(
+                              Icons.open_in_new,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                      secondaryBackground: const Card(
+                        color: Colors.red,
+                        elevation: 0,
+                        child: Align(
+                          alignment: Alignment.centerRight,
+                          child: Padding(
+                            padding: EdgeInsets.only(right: 20.0),
+                            child: Icon(
+                              Icons.delete,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                      confirmDismiss: (DismissDirection direction) async {
+                        if (direction == DismissDirection.startToEnd) {
+                          launchUrl(Uri.parse(link.destination));
+                          return false;
+                        }
+                        if (direction == DismissDirection.endToStart) {
+                          controller.deleteLink(link);
+                          return true;
+                        }
+                      },
+                      child: ListTile(
+                        title: Text(link.source),
+                        subtitle: Text(link.destination),
+                        trailing: Text(link.clicks.toString()),
+                      ),
                     );
                   },
                 ),
