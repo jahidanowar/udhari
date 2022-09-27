@@ -82,10 +82,8 @@ class LoginScreen extends StatelessWidget {
           colorText: Colors.white);
       Get.offAndToNamed(HomeScreen.routeName, arguments: u);
     } catch (e) {
-      print("error");
       MySnackbar.showSnackbar(
           context: ctx, message: "Unable to login!.", type: SnakbarType.error);
-      print(e);
     }
   }
 }

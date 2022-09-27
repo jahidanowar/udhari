@@ -106,9 +106,9 @@ class LinkController extends GetxController {
           .where('source', isEqualTo: link.source)
           .get()
           .then((QuerySnapshot querySnapshot) {
-        querySnapshot.docs.forEach((doc) {
+        for (var doc in querySnapshot.docs) {
           doc.reference.delete();
-        });
+        }
       });
 
       removeLink(link);
