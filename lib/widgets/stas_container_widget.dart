@@ -40,7 +40,7 @@ class StatsContainerWidget extends StatelessWidget {
                 child: Column(
                   children: <Widget>[
                     Text(
-                      '13',
+                      totalClicks.toString(),
                       style: Theme.of(context).textTheme.headline2,
                     ),
                     const Text('clicks'),

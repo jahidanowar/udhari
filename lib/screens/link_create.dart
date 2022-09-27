@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:udhari/controllers/link_controller.dart';
-import 'package:udhari/models/Link.dart';
 
 class LinkCreate extends StatefulWidget {
   const LinkCreate({super.key});
@@ -14,19 +13,14 @@ class LinkCreate extends StatefulWidget {
 class _LinkCreateState extends State<LinkCreate> {
   final LinkController controller = Get.find();
 
-  bool _isLoading = false;
-
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController _linkController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Create Link'),
+        title: const Text('create link'),
       ),
       body: Form(
-        key: _formKey,
+        key: controller.formKey,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
           child: SingleChildScrollView(
@@ -36,9 +30,9 @@ class _LinkCreateState extends State<LinkCreate> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
                   TextFormField(
-                    controller: _linkController,
+                    controller: controller.linkFormController,
                     decoration: const InputDecoration(
-                      labelText: 'Link',
+                      labelText: 'eneter or paste a valid url',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10.0)),
                       ),
@@ -55,21 +49,19 @@ class _LinkCreateState extends State<LinkCreate> {
                     },
                   ),
                   const SizedBox(height: 20),
-                  MaterialButton(
-                    minWidth: double.infinity,
-                    color: Theme.of(context).primaryColor,
-                    elevation: 0,
-                    onPressed: () async {
-                      if (_formKey.currentState!.validate()) {
-                        _createLink(context);
-                      }
-                    },
-                    child: _isLoading
-                        ? const CircularProgressIndicator(
-                            color: Colors.white,
-                            strokeWidth: 2.0,
-                          )
-                        : const Text('Create'),
+                  Obx(
+                    () => MaterialButton(
+                      minWidth: double.infinity,
+                      color: Theme.of(context).primaryColor,
+                      elevation: 0,
+                      onPressed: controller.createLink,
+                      child: controller.isLoading
+                          ? const CircularProgressIndicator(
+                              color: Colors.white,
+                              strokeWidth: 2.0,
+                            )
+                          : const Text('create'),
+                    ),
                   )
                 ],
               ),
@@ -78,34 +70,5 @@ class _LinkCreateState extends State<LinkCreate> {
         ),
       ),
     );
-  }
-
-  Future<void> _createLink(BuildContext context) async {
-    setState(() {
-      _isLoading = true;
-    });
-
-    Future.delayed(const Duration(seconds: 2), () {
-      controller.addLink(Link(
-        id: DateTime.now().millisecondsSinceEpoch.toString(),
-        source: _linkController.text,
-        destination: 'Flutter',
-        clicks: '0',
-      ));
-
-      setState(() {
-        _isLoading = false;
-      });
-
-      Get.back();
-
-      Get.snackbar(
-        "Link created",
-        'Link ${_linkController.text} created successfully',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.green,
-        colorText: Colors.white,
-      );
-    });
   }
 }

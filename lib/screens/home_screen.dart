@@ -42,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
         id: DateTime.now().millisecondsSinceEpoch.toString(),
         source: link,
         destination: 'Flutter',
-        clicks: '0',
+        clicks: '3',
       ));
     }
   }
@@ -51,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Dashboard'),
+        title: const Text('dashboard'),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => Get.toNamed(LinkCreate.routeName),
@@ -63,24 +63,25 @@ class _HomeScreenState extends State<HomeScreen> {
             // Stats
             Obx(
               () => StatsContainerWidget(
-                totalClicks: controller.allLinks.length,
-                totalLinks: controller.allLinks.length,
+                totalClicks: controller.totalClicks,
+                totalLinks: controller.totalLinks,
               ),
             ),
             Expanded(
-                child: Obx(
-              () => ListView.builder(
-                itemCount: controller.allLinks.length,
-                itemBuilder: (BuildContext context, int index) {
-                  final Link link = controller.allLinks[index];
-                  return ListTile(
-                    title: Text(link.source),
-                    subtitle: Text(link.destination),
-                    trailing: Text(link.clicks),
-                  );
-                },
+              child: Obx(
+                () => ListView.builder(
+                  itemCount: controller.allLinks.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    final Link link = controller.allLinks[index];
+                    return ListTile(
+                      title: Text(link.source),
+                      subtitle: Text(link.destination),
+                      trailing: Text(link.clicks),
+                    );
+                  },
+                ),
               ),
-            ))
+            )
           ],
         ),
       ),
