@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:udhari/controllers/link_controller.dart';
+import 'package:udhari/models/Link.dart';
 
 class LinkCreate extends StatefulWidget {
   const LinkCreate({super.key});
@@ -9,9 +12,11 @@ class LinkCreate extends StatefulWidget {
 }
 
 class _LinkCreateState extends State<LinkCreate> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final LinkController controller = Get.find();
 
-  // Link Controller
+  bool _isLoading = false;
+
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _linkController = TextEditingController();
 
   @override
@@ -56,10 +61,15 @@ class _LinkCreateState extends State<LinkCreate> {
                     elevation: 0,
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                        _createLink();
+                        _createLink(context);
                       }
                     },
-                    child: const Text('Create'),
+                    child: _isLoading
+                        ? const CircularProgressIndicator(
+                            color: Colors.white,
+                            strokeWidth: 2.0,
+                          )
+                        : const Text('Create'),
                   )
                 ],
               ),
@@ -70,10 +80,32 @@ class _LinkCreateState extends State<LinkCreate> {
     );
   }
 
-  Future<void> _createLink() async {
-    Future.delayed(const Duration(seconds: 5), () {
-      print("Data saved");
-      // Save data to firebase
+  Future<void> _createLink(BuildContext context) async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    Future.delayed(const Duration(seconds: 2), () {
+      controller.addLink(Link(
+        id: DateTime.now().millisecondsSinceEpoch.toString(),
+        source: _linkController.text,
+        destination: 'Flutter',
+        clicks: '0',
+      ));
+
+      setState(() {
+        _isLoading = false;
+      });
+
+      Get.back();
+
+      Get.snackbar(
+        "Link created",
+        'Link ${_linkController.text} created successfully',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+      );
     });
   }
 }

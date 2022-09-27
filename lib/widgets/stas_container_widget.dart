@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 
 class StatsContainerWidget extends StatelessWidget {
   const StatsContainerWidget({
+    required this.totalLinks,
+    required this.totalClicks,
     Key? key,
   }) : super(key: key);
+
+  final int totalLinks;
+  final int totalClicks;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +24,7 @@ class StatsContainerWidget extends StatelessWidget {
                 child: Column(
                   children: <Widget>[
                     Text(
-                      '5',
+                      totalLinks.toString(),
                       style: Theme.of(context).textTheme.headline2,
                     ),
                     const Text('links'),

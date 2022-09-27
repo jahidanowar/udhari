@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -28,10 +25,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -49,6 +43,16 @@ class DefaultFirebaseOptions {
     }
   }
 
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyD949dsgSOU7pECAq59NUWNsyLtOMTZYRE',
+    appId: '1:291877056924:web:a9e8d51f4cfcc88cfa1859',
+    messagingSenderId: '291877056924',
+    projectId: 'choton-f6ea6',
+    authDomain: 'choton-f6ea6.firebaseapp.com',
+    storageBucket: 'choton-f6ea6.appspot.com',
+    measurementId: 'G-352XFTW0JH',
+  );
+
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBt-w-whf5ADZacGWV3suItgSROGsrTF0I',
     appId: '1:291877056924:android:1c577444b1d2320dfa1859',
@@ -63,6 +67,18 @@ class DefaultFirebaseOptions {
     messagingSenderId: '291877056924',
     projectId: 'choton-f6ea6',
     storageBucket: 'choton-f6ea6.appspot.com',
+    androidClientId: '291877056924-ei8ou2bc7fni7alj64m0dp1lq10qoir8.apps.googleusercontent.com',
+    iosClientId: '291877056924-0191dio0j6n8nctgp5b7okn7ikm65gbh.apps.googleusercontent.com',
+    iosBundleId: 'com.example.udhari',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyAG95-oOW8eiN-30_YFjkvgcVf85DZk9ko',
+    appId: '1:291877056924:ios:b645feaece780d0ffa1859',
+    messagingSenderId: '291877056924',
+    projectId: 'choton-f6ea6',
+    storageBucket: 'choton-f6ea6.appspot.com',
+    androidClientId: '291877056924-ei8ou2bc7fni7alj64m0dp1lq10qoir8.apps.googleusercontent.com',
     iosClientId: '291877056924-0191dio0j6n8nctgp5b7okn7ikm65gbh.apps.googleusercontent.com',
     iosBundleId: 'com.example.udhari',
   );

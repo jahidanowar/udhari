@@ -67,7 +67,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      initialRoute: LoginScreen.routeName,
+      initialRoute: HomeScreen.routeName,
       getPages: [
         GetPage(
           name: LoginScreen.routeName,

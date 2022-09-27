@@ -1,17 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
-import 'package:udhari/models/Auth.dart';
+import 'package:get/get.dart';
+import 'package:udhari/controllers/link_controller.dart';
+import 'package:udhari/models/Link.dart';
 import 'package:udhari/screens/link_create.dart';
 import 'package:udhari/widgets/stas_container_widget.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
   static const String routeName = '/home';
 
   @override
-  Widget build(BuildContext context) {
-    final AuthUser user =
-        ModalRoute.of(context)!.settings.arguments as AuthUser;
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final LinkController controller = Get.put(LinkController());
+
+  @override
+  void initState() {
+    _fetchLinks();
+
+    super.initState();
+  }
+
+  _fetchLinks() async {
     final List<String> links = [
       'https://flutter.dev',
       'https://flutter.dev',
@@ -25,6 +37,18 @@ class HomeScreen extends StatelessWidget {
       'https://flutter.dev',
     ];
 
+    for (final String link in links) {
+      controller.addLink(Link(
+        id: DateTime.now().millisecondsSinceEpoch.toString(),
+        source: link,
+        destination: 'Flutter',
+        clicks: '0',
+      ));
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Dashboard'),
@@ -37,20 +61,26 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           children: <Widget>[
             // Stats
-            const StatsContainerWidget(),
+            Obx(
+              () => StatsContainerWidget(
+                totalClicks: controller.allLinks.length,
+                totalLinks: controller.allLinks.length,
+              ),
+            ),
             Expanded(
-              child: ListView.builder(
-                  padding: const EdgeInsets.all(14.0),
-                  itemCount: links.length,
-                  itemBuilder: (context, index) {
-                    return Card(
-                      child: ListTile(
-                        title: Text(links[index]),
-                        subtitle: const Text('clicks: 0'),
-                      ),
-                    );
-                  }),
-            )
+                child: Obx(
+              () => ListView.builder(
+                itemCount: controller.allLinks.length,
+                itemBuilder: (BuildContext context, int index) {
+                  final Link link = controller.allLinks[index];
+                  return ListTile(
+                    title: Text(link.source),
+                    subtitle: Text(link.destination),
+                    trailing: Text(link.clicks),
+                  );
+                },
+              ),
+            ))
           ],
         ),
       ),
