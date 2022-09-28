@@ -87,6 +87,7 @@ class LinkController extends GetxController {
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.black,
           colorText: Colors.white,
+          duration: const Duration(seconds: 1),
         );
         linkFormController.clear();
         keyFormController.text = nanoid(10);
@@ -112,8 +113,6 @@ class LinkController extends GetxController {
         }
       });
 
-      removeLink(link);
-
       Get.snackbar(
         "link deleted successfully",
         link.source,
@@ -121,6 +120,10 @@ class LinkController extends GetxController {
         backgroundColor: Colors.black,
         colorText: Colors.white,
       );
+
+      // Future.delayed(const Duration(seconds: 1), () {
+      //   removeLink(link);
+      // });
     } catch (e) {
       print(e);
     }
@@ -130,11 +133,12 @@ class LinkController extends GetxController {
   copyLink(String link) {
     Clipboard.setData(ClipboardData(text: link));
     Get.snackbar(
-      "link copied successfully",
-      link,
+      "link copied to your clipboard",
+      link.replaceRange(40, link.length, "..."),
       snackPosition: SnackPosition.BOTTOM,
       backgroundColor: Colors.black,
       colorText: Colors.white,
+      duration: const Duration(seconds: 1),
     );
   }
 }

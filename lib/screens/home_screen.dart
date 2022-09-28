@@ -63,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   itemBuilder: (BuildContext context, int index) {
                     final Link link = controller.allLinks[index];
                     return Dismissible(
-                      key: Key(index.toString()),
+                      key: UniqueKey(),
                       background: const Card(
                         elevation: 0,
                         color: Colors.green,
@@ -95,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       confirmDismiss: (DismissDirection direction) async {
                         if (direction == DismissDirection.startToEnd) {
                           // launchUrl(Uri.parse(link.destination));
-                          Get.toNamed(LinkView.routeName);
+                          Get.toNamed(LinkView.routeName, arguments: link);
                           return false;
                         }
                         if (direction == DismissDirection.endToStart) {
@@ -103,9 +103,17 @@ class _HomeScreenState extends State<HomeScreen> {
                           return true;
                         }
                       },
+                      onDismissed: (DismissDirection direction) {
+                        if (direction == DismissDirection.endToStart) {
+                          controller.removeLink(link);
+                        }
+                      },
                       child: ListTile(
                         title: Text(link.source),
-                        subtitle: Text(link.destination),
+                        subtitle: Text(
+                          link.destination
+                              .replaceRange(40, link.destination.length, '...'),
+                        ),
                         trailing: Text(
                           link.clicks.toString(),
                         ),
