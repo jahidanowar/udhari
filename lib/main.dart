@@ -26,6 +26,8 @@ class MyApp extends StatelessWidget {
 
     return GetMaterialApp(
       title: 'choton',
+      showPerformanceOverlay: true,
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
         fontFamily: GoogleFonts.sora().fontFamily,

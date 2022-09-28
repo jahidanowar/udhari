@@ -134,7 +134,7 @@ class LinkController extends GetxController {
     Clipboard.setData(ClipboardData(text: link));
     Get.snackbar(
       "link copied to your clipboard",
-      link.replaceRange(40, link.length, "..."),
+      link.length > 40 ? link.replaceRange(40, link.length, '...') : link,
       snackPosition: SnackPosition.BOTTOM,
       backgroundColor: Colors.black,
       colorText: Colors.white,

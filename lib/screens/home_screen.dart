@@ -111,8 +111,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: ListTile(
                         title: Text(link.source),
                         subtitle: Text(
-                          link.destination
-                              .replaceRange(40, link.destination.length, '...'),
+                          link.destination.length > 40
+                              ? link.destination.replaceRange(
+                                  40, link.destination.length, '...')
+                              : link.destination,
                         ),
                         trailing: Text(
                           link.clicks.toString(),
