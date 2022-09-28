@@ -28,6 +28,7 @@ class MyApp extends StatelessWidget {
       title: 'choton',
       theme: ThemeData(
         useMaterial3: true,
+        fontFamily: GoogleFonts.sora().fontFamily,
         primarySwatch: const MaterialColor(
           0xFF1E1E1E,
           <int, Color>{

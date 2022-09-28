@@ -1,11 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:udhari/controllers/link_controller.dart';
 import 'package:udhari/models/Link.dart';
 import 'package:udhari/screens/link_create.dart';
 import 'package:udhari/screens/link_view.dart';
+import 'package:udhari/screens/login_screen.dart';
 import 'package:udhari/widgets/stas_container_widget.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -29,6 +30,17 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('dashboard'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout),
+            onPressed: () async {
+              // Firebase signout
+              await FirebaseAuth.instance.signOut();
+              // Navigate to login screen
+              Get.offAllNamed(LoginScreen.routeName);
+            },
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => Get.toNamed(LinkCreate.routeName),
