@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:udhari/controllers/link_controller.dart';
 import 'package:udhari/models/Link.dart';
 import 'package:udhari/screens/link_create.dart';
+import 'package:udhari/screens/link_view.dart';
 import 'package:udhari/widgets/stas_container_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -81,7 +82,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       confirmDismiss: (DismissDirection direction) async {
                         if (direction == DismissDirection.startToEnd) {
-                          launchUrl(Uri.parse(link.destination));
+                          // launchUrl(Uri.parse(link.destination));
+                          Get.toNamed(LinkView.routeName);
                           return false;
                         }
                         if (direction == DismissDirection.endToStart) {
@@ -92,7 +94,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: ListTile(
                         title: Text(link.source),
                         subtitle: Text(link.destination),
-                        trailing: Text(link.clicks.toString()),
+                        trailing: Text(
+                          link.clicks.toString(),
+                        ),
+                        onTap: () => {
+                          controller.copyLink(link.destination),
+                        },
                       ),
                     );
                   },

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:nanoid/nanoid.dart';
 import 'package:udhari/models/Link.dart';
@@ -123,5 +124,17 @@ class LinkController extends GetxController {
     } catch (e) {
       print(e);
     }
+  }
+
+  // Copy Link
+  copyLink(String link) {
+    Clipboard.setData(ClipboardData(text: link));
+    Get.snackbar(
+      "link copied successfully",
+      link,
+      snackPosition: SnackPosition.BOTTOM,
+      backgroundColor: Colors.black,
+      colorText: Colors.white,
+    );
   }
 }

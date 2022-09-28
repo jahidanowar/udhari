@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:udhari/screens/home_screen.dart';
 import 'package:udhari/screens/link_create.dart';
+import 'package:udhari/screens/link_view.dart';
 import 'package:udhari/screens/login_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -24,8 +25,9 @@ class MyApp extends StatelessWidget {
     final FirebaseAuth auth = FirebaseAuth.instance;
 
     return GetMaterialApp(
-      title: 'Flutter Demo',
+      title: 'choton',
       theme: ThemeData(
+        useMaterial3: true,
         primarySwatch: const MaterialColor(
           0xFF1E1E1E,
           <int, Color>{
@@ -41,7 +43,6 @@ class MyApp extends StatelessWidget {
             900: Color(0xFF1E1E1E),
           },
         ),
-        fontFamily: GoogleFonts.sora().fontFamily,
         buttonTheme: const ButtonThemeData(
           buttonColor: Color(0xFF1E1E1E),
           textTheme: ButtonTextTheme.primary,
@@ -70,6 +71,28 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
+      darkTheme: ThemeData.dark(useMaterial3: true).copyWith(
+        scaffoldBackgroundColor: const Color(0xFF0f172a),
+        cardTheme: const CardTheme(
+          color: Color(0xFF1e293b),
+        ),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Color(0xFF1e293b),
+        ),
+        primaryColor: Colors.lightBlue,
+        textTheme: GoogleFonts.soraTextTheme(ThemeData.dark().textTheme),
+        buttonTheme: const ButtonThemeData(
+          textTheme: ButtonTextTheme.primary,
+          height: 60,
+          minWidth: 200.0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(10.0),
+            ),
+          ),
+        ),
+      ),
+      themeMode: ThemeMode.system,
       initialRoute: auth.currentUser != null
           ? HomeScreen.routeName
           : LoginScreen.routeName,
@@ -86,6 +109,10 @@ class MyApp extends StatelessWidget {
           name: LinkCreate.routeName,
           page: () => const LinkCreate(),
         ),
+        GetPage(
+          name: LinkView.routeName,
+          page: () => LinkView(),
+        )
       ],
     );
   }
